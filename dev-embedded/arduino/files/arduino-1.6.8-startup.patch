@@ -1,0 +1,87 @@
+--- a/app/src/processing/app/Base.java	2016-03-13 22:15:01.741451380 -0400
++++ b/app/src/processing/app/Base.java	2016-03-14 19:18:48.020801765 -0400
+@@ -747,6 +747,8 @@
+     } catch (IOException e) {
+       if (activeEditor != null) {
+         activeEditor.statusError(e);
++      } else {
++        e.printStackTrace();
+       }
+     }
+   }
+--- a/arduino-core/src/processing/app/Platform.java	2016-03-17 00:29:33.841099694 -0400
++++ b/arduino-core/src/processing/app/Platform.java	2016-03-17 00:29:56.909802119 -0400
+@@ -145,7 +145,7 @@
+   }
+ 
+   static {
+-    loadLib(new File(BaseNoGui.getContentFile("lib"), System.mapLibraryName("listSerialsj")));
++    System.loadLibrary("listSerialsj");
+   };
+ 
+   private static void loadLib(File lib) {
+--- a/hardware/arduino/avr/platform.txt	2016-03-17 00:55:17.040196829 -0400
++++ b/hardware/arduino/avr/platform.txt	2016-03-17 00:56:04.228587252 -0400
+@@ -18,7 +18,7 @@
+ compiler.warning_flags.all=-Wall -Wextra
+ 
+ # Default "compiler.path" is correct, change only if you want to overidde the initial value
+-compiler.path={runtime.tools.avr-gcc.path}/bin/
++compiler.path=/usr/bin/
+ compiler.c.cmd=avr-gcc
+ compiler.c.flags=-c -g -Os {compiler.warning_flags} -std=gnu11 -ffunction-sections -fdata-sections -MMD
+ # -w flag added to avoid printing a wrong warning http://gcc.gnu.org/bugzilla/show_bug.cgi?id=59396
+@@ -91,9 +91,9 @@
+ # AVR Uploader/Programmers tools
+ # ------------------------------
+ 
+-tools.avrdude.path={runtime.tools.avrdude.path}
++tools.avrdude.path=/usr
+ tools.avrdude.cmd.path={path}/bin/avrdude
+-tools.avrdude.config.path={path}/etc/avrdude.conf
++tools.avrdude.config.path=/etc/avrdude.conf
+ 
+ tools.avrdude.upload.params.verbose=-v
+ tools.avrdude.upload.params.quiet=-q -q
+--- a/app/src/cc/arduino/packages/formatter/AStyleInterface.java	2016-03-17 23:58:11.616069086 -0400
++++ b/app/src/cc/arduino/packages/formatter/AStyleInterface.java	2016-03-17 23:58:27.564864023 -0400
+@@ -41,7 +41,7 @@
+       loadLib(Base.getContentFile(System.mapLibraryName("msvcp100")));
+       loadLib(Base.getContentFile(System.mapLibraryName("msvcr100")));
+     }
+-    loadLib(new File(Base.getContentFile("lib"), System.mapLibraryName("astylej")));
++    System.loadLibrary("astylej");
+   }
+ 
+   private static void loadLib(File lib) {
+--- a/app/src/processing/app/Base.java	2016-03-18 00:30:57.537608387 -0400
++++ b/app/src/processing/app/Base.java	2016-03-18 00:31:15.267371958 -0400
+@@ -47,7 +47,6 @@
+ import processing.app.helpers.filefilters.OnlyFilesWithExtension;
+ import processing.app.javax.swing.filechooser.FileNameExtensionFilter;
+ import processing.app.legacy.PApplet;
+-import processing.app.macosx.ThinkDifferent;
+ import processing.app.packages.LibraryList;
+ import processing.app.packages.UserLibrary;
+ import processing.app.syntax.PdeKeywords;
+@@ -129,10 +128,6 @@
+ 
+     splashScreenHelper.splashText(tr("Loading configuration..."));
+ 
+-    if (OSUtils.isMacOS()) {
+-      ThinkDifferent.init();
+-    }
+-
+     try {
+       guardedMain(args);
+     } catch (Throwable e) {
+--- a/arduino-core/src/processing/app/linux/Platform.java	2016-03-18 00:34:37.179690507 -0400
++++ b/arduino-core/src/processing/app/linux/Platform.java	2016-03-18 00:34:38.536672987 -0400
+@@ -37,7 +37,6 @@
+   // TODO Need to be smarter here since KDE people ain't gonna like that GTK.
+   //      It may even throw a weird exception at 'em for their trouble.
+   public void setLookAndFeel() throws Exception {
+-    GTKLookAndFeelFixer.installGtkPopupBugWorkaround();
+   }
+ 
+ 

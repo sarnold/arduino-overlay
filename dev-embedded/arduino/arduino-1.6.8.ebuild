@@ -40,7 +40,7 @@ dev-java/jackson-databind:2
 dev-java/jmdns:0
 dev-java/jna:0
 dev-java/jsch:0
-dev-java/jssc:0
+>=dev-java/jssc-2.8.0-r1:0
 dev-java/xmlgraphics-commons:2
 dev-util/astyle[java]"
 

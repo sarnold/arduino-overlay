@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit eutils java-pkg-2
+inherit eutils java-pkg-2 toolchain-funcs
 
 DESCRIPTION="List serial ports with vid/pid/iserial fields"
 HOMEPAGE="https://github.com/arduino/listSerialPortsC"
@@ -25,12 +25,20 @@ src_prepare() {
 }
 
 src_compile() {
-	CC=${CHOST}-gcc
-	${CC} -Wall -O2 ${CPPFLAGS} ${CFLAGS} -o main.o -c main.c
+	CC=$(tc-getCC)
+	${CC} -Wall -O2 ${CPPFLAGS} ${CFLAGS} -c -o main.o main.c
 	${CC} ${CFLAGS} ${LDFLAGS} main.o -lserialport -o listSerialC
 
-	${CC} -Wall -O2 ${CPPFLAGS} ${CFLAGS} -fPIC -I$(java-config-2 -o)/include -I$(java-config-2 -o)/include/linux -o jnilib.o -c jnilib.c
-	${CC} ${CFLAGS} ${LDFLAGS} -shared -Wl,-soname,liblistSerialsj.so jnilib.o -lserialport -o liblistSerialsj.so.${PV}
+	${CC} \
+		-Wall -O2 ${CPPFLAGS} ${CFLAGS} -fPIC \
+		-I$(java-config-2 -o)/include \
+		-I$(java-config-2 -o)/include/linux \
+		-o jnilib.o -c jnilib.c
+
+	${CC} \
+		${CFLAGS} ${LDFLAGS} \
+		-shared -Wl,-soname,liblistSerialsj.so \
+		jnilib.o -lserialport -o liblistSerialsj.so.${PV}
 }
 
 src_install() {

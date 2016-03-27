@@ -1,6 +1,9 @@
 sys-devel/crossdev
 dev-embedded/arduino-builder
-dev-embedded/arduino
+dev-embedded/arduino-core
+dev-embedded/arduino-ide
+dev-embedded/arduide
+dev-embedded/gnoduino
 dev-embedded/avrdude
 dev-util/ctags
 dev-libs/libserialport

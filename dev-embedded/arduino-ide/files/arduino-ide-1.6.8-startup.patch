@@ -20,29 +20,6 @@
    };
  
    private static void loadLib(File lib) {
---- a/hardware/arduino/avr/platform.txt	2016-03-17 00:55:17.040196829 -0400
-+++ b/hardware/arduino/avr/platform.txt	2016-03-17 00:56:04.228587252 -0400
-@@ -18,7 +18,7 @@
- compiler.warning_flags.all=-Wall -Wextra
- 
- # Default "compiler.path" is correct, change only if you want to overidde the initial value
--compiler.path={runtime.tools.avr-gcc.path}/bin/
-+compiler.path=/usr/bin/
- compiler.c.cmd=avr-gcc
- compiler.c.flags=-c -g -Os {compiler.warning_flags} -std=gnu11 -ffunction-sections -fdata-sections -MMD
- # -w flag added to avoid printing a wrong warning http://gcc.gnu.org/bugzilla/show_bug.cgi?id=59396
-@@ -91,9 +91,9 @@
- # AVR Uploader/Programmers tools
- # ------------------------------
- 
--tools.avrdude.path={runtime.tools.avrdude.path}
-+tools.avrdude.path=/usr
- tools.avrdude.cmd.path={path}/bin/avrdude
--tools.avrdude.config.path={path}/etc/avrdude.conf
-+tools.avrdude.config.path=/etc/avrdude.conf
- 
- tools.avrdude.upload.params.verbose=-v
- tools.avrdude.upload.params.quiet=-q -q
 --- a/app/src/cc/arduino/packages/formatter/AStyleInterface.java	2016-03-17 23:58:11.616069086 -0400
 +++ b/app/src/cc/arduino/packages/formatter/AStyleInterface.java	2016-03-17 23:58:27.564864023 -0400
 @@ -41,7 +41,7 @@
@@ -85,3 +62,21 @@
    }
  
  
+--- a/arduino-core/src/processing/app/BaseNoGui.java	2016-03-26 19:12:50.769791536 -0400
++++ b/arduino-core/src/processing/app/BaseNoGui.java	2016-03-26 19:17:57.352927746 -0400
+@@ -161,8 +161,14 @@
+     return prefs;
+   }
+ 
++  static public boolean isAppDir(String name) {
++    String dirs[] = name.split("//*", 3);
++    return (dirs.length >= 1 && dirs[0].equals("lib")) ||
++      (dirs.length >= 2 && dirs[0].equals("") & dirs[1].equals("lib"));
++  }
++
+   static public File getContentFile(String name) {
+-    String appDir = System.getProperty("APP_DIR");
++    String appDir = System.getProperty(isAppDir(name) ? "APP_DIR" : "CORE_DIR");
+     if (appDir == null || appDir.length() == 0) {
+       appDir = currentDirectory;
+     }

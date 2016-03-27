@@ -1,9 +1,9 @@
 [Desktop Entry]
 Version=1.0
-Name=arduino
+Name=arduino-ide
 Comment=Open-source electronics prototyping platform
-Exec=arduino
-Icon=arduino
+Exec=arduino-ide
+Icon=arduino-ide
 Terminal=false
 Type=Application
 Categories=Development;

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=4
+EAPI=5
 JAVA_PKG_IUSE="doc"
 
 inherit eutils java-pkg-2 java-ant-2
@@ -11,10 +11,9 @@ DESCRIPTION="An open-source AVR electronics prototyping platform"
 HOMEPAGE="http://arduino.cc/"
 SRC_URI="https://github.com/${PN}/Arduino/archive/${PV}.tar.gz"
 
-LICENSE="GPL-2 GPL-2+ LGPL-2.1 CC-BY-SA-3.0"
+LICENSE="GPL-2 LGPL-2.1 CC-BY-SA-3.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-RESTRICT="strip binchecks"
 
 # Todo: Remaining bundled libs:
 #   commons-exec
@@ -45,9 +44,7 @@ dev-java/xmlgraphics-commons:2
 dev-util/astyle[java]"
 
 RDEPEND="${COMMONDEP}
-dev-embedded/arduino-builder
-dev-embedded/avrdude
-dev-embedded/uisp
+dev-embedded/arduino-core
 >=virtual/jre-1.8"
 
 DEPEND="${COMMONDEP}
@@ -59,19 +56,19 @@ EANT_BUILD_TARGET="build"
 JAVA_ANT_REWRITE_CLASSPATH="yes"
 
 S="${WORKDIR}/Arduino-${PV}"
+CORE="/usr/share/arduino-core"
 
 java_prepare() {
 	# Remove bundled libraries to ensure the system libraries are used
 	rm -f {arduino-core,app}/lib/{apple*,batik*,bcpg*,bcprov*,commons-[^e]*,jackson-[^m]*,jmdns*,jna*,jsch*,jssc*,xmlgraphics*} || die
 
-	epatch "${FILESDIR}/arduino-1.6.8-build.xml.patch"
+	epatch "${FILESDIR}/${P}-build.xml.patch"
 	if ! use doc; then
-	    epatch "${FILESDIR}/arduino-1.6.8-no-doc.patch"
+	    epatch "${FILESDIR}/${P}-no-doc.patch"
 	fi
 	sed -e 's/<download-library[^>]*>//g' -i build/build.xml
 
-	epatch "${FILESDIR}/arduino-1.6.8-startup.patch"
-	cp "${FILESDIR}/platform-${PV}/"* hardware/
+	epatch "${FILESDIR}/${P}-startup.patch"
 
 	rm -rf {arduino-core,app}/src/processing/app/macosx
 	rm -rf arduino-core/src/processing/app/linux/GTKLookAndFeelFixer.java
@@ -86,39 +83,26 @@ src_install() {
 
 	java-pkg_dojar lib/*.jar
 	java-pkg_dolauncher ${PN} \
-			    --pwd /usr/share/${PN} \
-			    --main processing.app.Base \
-			    --java_args "-DAPP_DIR=/usr/share/${PN} -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -splash:/usr/share/${PN}/lib/splash.png"
+			    --pwd "${CORE}" \
+			    --main "processing.app.Base" \
+			    --java_args "-DAPP_DIR=/usr/share/${PN} -DCORE_DIR=${CORE} -splash:/usr/share/${PN}/lib/splash.png"
+
+	# Install libraries
+	insinto "/usr/share/${PN}"
+
+	rm -fr lib/*.jar lib/*.so
+	doins -r lib
 
 	if use doc; then
 		dodoc revisions.txt "${S}"/README.md
 		dohtml -r reference
 	fi
 
-	insinto "/usr/share/${PN}/"
-	rm -fr hardware/tools
-	doins -r hardware libraries dist
-	fowners -R root:uucp "/usr/share/${PN}/hardware"
-
-	# Install libraries
-	rm -f lib/*.jar lib/*.so
-	doins -r lib
-
-	# Use system ctags and arduino-builder
-	dosym /usr/bin/arduino-builder "/usr/share/${PN}/arduino-builder"
-
-	# Install example (NOT optional, needed for application startup)
-	doins -r "${S}/build/shared/examples"
-
-	# hardware/tools/avr needs to exist or arduino-builder will
-	# complain about missing required -tools arg
-	dodir "/usr/share/${PN}/hardware/tools/avr"
-
-	# install menu and icons
+	# Install menu and icons
 	domenu "${FILESDIR}/${PN}.desktop"
 	for sz in `ls lib/icons | sed -e 's/\([0-9]*\)x[0-9]*/\1/'`; do
 		newicon -s $sz \
-			"lib/icons/${sz}x${sz}/apps/${PN}.png" \
+			"lib/icons/${sz}x${sz}/apps/arduino.png" \
 			"${PN}.png"
 	done
 }

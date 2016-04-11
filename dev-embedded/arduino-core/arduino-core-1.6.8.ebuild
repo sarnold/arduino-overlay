@@ -8,7 +8,7 @@ inherit eutils
 
 DESCRIPTION="An open-source AVR electronics prototyping platform"
 HOMEPAGE="http://arduino.cc/"
-SRC_URI="https://github.com/${PN}/Arduino/archive/${PV}.tar.gz"
+SRC_URI="https://github.com/arduino/Arduino/archive/${PV}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"

@@ -9,7 +9,7 @@ inherit eutils java-pkg-2 java-ant-2
 
 DESCRIPTION="An open-source AVR electronics prototyping platform"
 HOMEPAGE="http://arduino.cc/"
-SRC_URI="https://github.com/${PN}/Arduino/archive/${PV}.tar.gz"
+SRC_URI="https://github.com/arduino/Arduino/archive/${PV}.tar.gz"
 
 LICENSE="GPL-2 LGPL-2.1 CC-BY-SA-3.0"
 SLOT="0"

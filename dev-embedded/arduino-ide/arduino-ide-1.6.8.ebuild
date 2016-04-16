@@ -32,7 +32,7 @@ dev-java/commons-compress:0
 dev-java/commons-httpclient:3
 dev-java/commons-lang:3.3
 dev-java/commons-logging:0
-dev-java/commons-net:0
+>=dev-java/commons-net-3.2:0
 dev-java/jackson:2
 dev-java/jackson-annotations:2
 dev-java/jackson-databind:2

@@ -64,14 +64,17 @@
  
 --- a/arduino-core/src/processing/app/BaseNoGui.java	2016-03-26 19:12:50.769791536 -0400
 +++ b/arduino-core/src/processing/app/BaseNoGui.java	2016-03-26 19:17:57.352927746 -0400
-@@ -161,8 +161,14 @@
+@@ -161,8 +161,17 @@
      return prefs;
    }
  
 +  static public boolean isAppDir(String name) {
 +    String dirs[] = name.split("//*", 3);
-+    return (dirs.length >= 1 && dirs[0].equals("lib")) ||
-+      (dirs.length >= 2 && dirs[0].equals("") & dirs[1].equals("lib"));
++    if (dirs.length == 0) {
++       return false;
++    }
++    int index = dirs.length >= 2 && dirs[0].equals("") ? 1 : 0;
++    return dirs[index].equals("lib") || dirs[index].equals("dist");
 +  }
 +
    static public File getContentFile(String name) {

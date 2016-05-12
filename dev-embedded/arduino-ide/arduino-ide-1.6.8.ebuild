@@ -92,7 +92,7 @@ src_install() {
 	insinto "/usr/share/${PN}"
 
 	rm -fr lib/*.jar lib/*.so
-	doins -r lib
+	doins -r lib dist
 
 	if use doc; then
 		dodoc revisions.txt "${S}"/README.md

@@ -23,10 +23,6 @@ DEPEND=">=dev-lang/go-1.4.3
 	dev-go/testify
 	dev-go/go-junit-report"
 
-src_prepare() {
-	epatch "${FILESDIR}/arduino-builder-1.3.14-codereview-patch.patch"
-}
-
 src_compile() {
 	golang-build_src_compile
 

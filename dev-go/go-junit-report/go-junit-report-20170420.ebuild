@@ -6,7 +6,7 @@ EAPI=5
 inherit golang-build golang-vcs-snapshot
 
 EGO_PN="github.com/jstemmer/go-junit-report/..."
-EGIT_COMMIT="833f8ea2b99d36d5f018698333834f3df200a0c2"
+EGIT_COMMIT="dd4990585ef80cedeb52eaadb2ce8dd71f9bdc37"
 ARCHIVE_URI="https://${EGO_PN%/*}/archive/${EGIT_COMMIT}.tar.gz -> ${P}.tar.gz"
 KEYWORDS="~amd64 ~x86"
 

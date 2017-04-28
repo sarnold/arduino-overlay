@@ -10,7 +10,7 @@ DESCRIPTION="Exuberant Ctags creates tags files for code browsing in editors"
 HOMEPAGE="http://ctags.sourceforge.net"
 # this commit is from the sourceforge branch, which is a git-svn clone of the
 # original exhuberant-ctags SVN repository
-SRC_URI="https://github.com/arduino/ctags/archive/5dbd71201f79e976a728802ca8638b14db0728dc.tar.gz -> ${P}.tar.gz
+SRC_URI="https://github.com/arduino/ctags/archive/master.tar.gz -> ${P}.tar.gz
 	ada? ( mirror://sourceforge/gnuada/ctags-ada-mode-4.3.11.tar.bz2 )"
 
 LICENSE="GPL-2"

@@ -48,12 +48,16 @@ dev-util/astyle[java]
 dev-embedded/listserialportsc"
 
 RDEPEND="${COMMONDEP}
->=virtual/jre-1.8"
+>=virtual/jre-1.8
+dev-embedded/arduino-builder
+dev-embedded/avrdude        
+dev-embedded/uisp"          
+
 
 DEPEND="${COMMONDEP}
 >=virtual/jdk-1.8"
 
-EANT_GENTOO_CLASSPATH="batik-1.8,bcpg-1.52,bcprov-1.52,commons-codec,commons-compress,commons-httpclient-3,commons-lang-3.3,commons-logging,commons-net,jackson-2,jackson-annotations-2,jackson-databind-2,jackson-modules-base-2,jmdns,jna,jsch,jssc,xmlgraphics-commons-2"
+EANT_GENTOO_CLASSPATH="batik-1.8,bcpg-1.52,bcprov-1.52,commons-codec,commons-compress,commons-httpclient-3,commons-lang-3.3,commons-logging,commons-net,jackson-2,jackson-annotations-2,jackson-databind-2,jackson-modules-base-2,jmdns,jna,jsch,jssc,ml-commons-external-1.3,xmlgraphics-commons-2"
 EANT_EXTRA_ARGS="-Djava.net.preferIPv4Stack=true"
 EANT_BUILD_TARGET="build"
 JAVA_ANT_REWRITE_CLASSPATH="yes"

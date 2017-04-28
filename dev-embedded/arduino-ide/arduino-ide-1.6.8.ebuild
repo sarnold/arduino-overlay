@@ -36,6 +36,7 @@ dev-java/commons-logging:0
 dev-java/jackson:2
 dev-java/jackson-annotations:2
 dev-java/jackson-databind:2
+dev-java/jackson-modules-base:2
 dev-java/jmdns:0
 dev-java/jna:0
 dev-java/jsch:0
@@ -51,7 +52,7 @@ dev-embedded/arduino-core
 DEPEND="${COMMONDEP}
 >=virtual/jdk-1.8"
 
-EANT_GENTOO_CLASSPATH="batik-1.8,bcpg-1.52,bcprov-1.52,commons-codec,commons-compress,commons-httpclient-3,commons-lang-3.3,commons-logging,commons-net,jackson-2,jackson-annotations-2,jackson-databind-2,jmdns,jna,jsch,jssc,xmlgraphics-commons-2"
+EANT_GENTOO_CLASSPATH="batik-1.8,bcpg-1.52,bcprov-1.52,commons-codec,commons-compress,commons-httpclient-3,commons-lang-3.3,commons-logging,commons-net,jackson-2,jackson-annotations-2,jackson-databind-2,jackson-modules-base-2,jmdns,jna,jsch,jssc,xmlgraphics-commons-2"
 EANT_EXTRA_ARGS="-Djava.net.preferIPv4Stack=true"
 EANT_BUILD_TARGET="build"
 JAVA_ANT_REWRITE_CLASSPATH="yes"
@@ -61,7 +62,7 @@ CORE="/usr/share/arduino-core"
 
 java_prepare() {
 	# Remove bundled libraries to ensure the system libraries are used
-	rm -f {arduino-core,app}/lib/{apple*,batik*,bcpg*,bcprov*,commons-[^e]*,jackson-[^m]*,jmdns*,jna*,jsch*,jssc*,xmlgraphics*} || die
+	rm -f {arduino-core,app}/lib/{apple*,batik*,bcpg*,bcprov*,commons-[^e]*,jackson*,jmdns*,jna*,jsch*,jssc*,xmlgraphics*} || die
 
 	epatch "${FILESDIR}/${P}-build.xml.patch"
 	if ! use doc; then

@@ -14,6 +14,7 @@ SRC_URI="https://github.com/arduino/Arduino/archive/${PV}.tar.gz"
 LICENSE="GPL-2 LGPL-2.1 CC-BY-SA-3.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
+RESTRICT="strip binchecks"
 
 # Todo: Remaining bundled libs:
 #   commons-exec
@@ -57,7 +58,7 @@ dev-embedded/uisp"
 DEPEND="${COMMONDEP}
 >=virtual/jdk-1.8"
 
-EANT_GENTOO_CLASSPATH="batik-1.8,bcpg-1.52,bcprov-1.52,commons-codec,commons-compress,commons-httpclient-3,commons-lang-3.3,commons-logging,commons-net,jackson-2,jackson-annotations-2,jackson-databind-2,jackson-modules-base-2,jmdns,jna,jsch,jssc,ml-commons-external-1.3,xmlgraphics-commons-2"
+EANT_GENTOO_CLASSPATH="batik-1.8,bcpg-1.52,bcprov-1.52,commons-codec,commons-compress,commons-httpclient-3,commons-lang-3.3,commons-logging,commons-net,jackson-2,jackson-annotations-2,jackson-databind-2,jackson-modules-base-2,jmdns,jna,jsch,jssc,xml-commons-external-1.3,xmlgraphics-commons-2"
 EANT_EXTRA_ARGS="-Djava.net.preferIPv4Stack=true"
 EANT_BUILD_TARGET="build"
 JAVA_ANT_REWRITE_CLASSPATH="yes"
@@ -67,7 +68,8 @@ CORE="/usr/share/arduino"
 
 java_prepare() {
 	# Remove bundled libraries to ensure the system libraries are used
-#	rm -f {arduino-core,app}/lib/{apple*,batik*,bcpg*,bcprov*,commons-[^e]*,jackson-*,jmdns*,jna*,jsch*,jssc*,xmlgraphics*} || die
+	# Elegant, but breaks the build :(
+	#rm -f {arduino-core,app}/lib/{apple*,batik*,bcpg*,bcprov*,commons-[^e]*,jackson-*,jmdns*,jna*,jsch*,jssc*,xmlgraphics*} || die
 
 #	epatch "${FILESDIR}/${P}-build.xml.patch"
 #	if ! use doc; then
@@ -86,21 +88,20 @@ src_compile() {
 }
 
 src_install() {
+	insinto "/usr/share/${PN}"
+        mkdir hardware/tools/avr
+	doins -r hardware
+
 	cd "${S}"/build/linux/work || die
+	rm -v lib/{apple*,batik*,bcpg*,bcprov*,commons-[^e]*,jackson*,jmdns*,jna*,jsch*,jssc*,slf4j*,xml*}
+	rm -v lib/*.so 
+	doins -r lib examples
 
 	java-pkg_dojar lib/*.jar
 	java-pkg_dolauncher ${PN} \
 			    --pwd "${CORE}" \
 			    --main "processing.app.Base" \
 			    --java_args "-DAPP_DIR=/usr/share/${PN} -DCORE_DIR=${CORE} -splash:/usr/share/${PN}/lib/splash.png"
-
-	# Install libraries
-	insinto "/usr/share/${PN}"
-
-        rm lib/{apple*,batik*,bcpg*,bcprov*,commons-[^e]*,jackson*,jmdns*,jna*,jsch*,jssc*,slf4j*,xml*}
-	rm lib/*.so
-
-	doins -r lib examples hardware
 
 	if use doc; then
 		dodoc revisions.txt "${S}"/README.md

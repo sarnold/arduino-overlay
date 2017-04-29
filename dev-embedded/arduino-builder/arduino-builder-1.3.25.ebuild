@@ -23,11 +23,16 @@ DEPEND=">=dev-lang/go-1.4.3
 	dev-go/testify
 	dev-go/go-junit-report"
 
+src_prepare() {
+	./fmt_fix_vet || die
+	epatch "${FILESDIR}"/platform.patch
+}
+
 src_compile() {
 	golang-build_src_compile
 
 	set -- env GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)" \
-	    go build -v -work -x ${EGO_BUILD_FLAGS} -o arduino-builder main.go
+	    go build -v -work -x ${EGO_BUILD_FLAGS} arduino.cc/arduino-builder 
 	echo "$@"
 	"$@" || die
 }
@@ -36,6 +41,10 @@ src_install() {
 	golang-build_src_install
 
 	dobin arduino-builder
+
+	insinto "/usr/share/${PN}"
+
+	doins -r src/arduino.cc/builder/hardware/*
 }
 
 pkg_postinst() {

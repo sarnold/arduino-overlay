@@ -21,8 +21,6 @@ RESTRICT="strip binchecks"
 #   jackson-module-mrbean
 #   java-semver
 #   rsyntaxtextarea-arduino
-#   xml-apis
-#   xml-apis-ext
 
 COMMONDEP="
 dev-java/batik:1.8
@@ -65,6 +63,7 @@ JAVA_ANT_REWRITE_CLASSPATH="yes"
 
 S="${WORKDIR}/Arduino-${PV}"
 CORE="/usr/share/arduino"
+SHARE="/usr/share/${PN}"
 
 java_prepare() {
 	# Remove bundled libraries to ensure the system libraries are used
@@ -78,6 +77,7 @@ java_prepare() {
 #	sed -e 's/<download-library[^>]*>//g' -i build/build.xml
 
 	epatch "${FILESDIR}/${P}-startup.patch"
+	epatch "${FILESDIR}/${P}-platform.patch"
 
 #	rm -rf {arduino-core,app}/src/processing/app/macosx
 #	rm -rf arduino-core/src/processing/app/linux/GTKLookAndFeelFixer.java
@@ -88,9 +88,17 @@ src_compile() {
 }
 
 src_install() {
-	insinto "/usr/share/${PN}"
-        mkdir hardware/tools/avr
+	insinto "${SHARE}"
 	doins -r hardware
+
+        # Use system arduino-builder               
+        dosym /usr/bin/arduino-builder "${SHARE}/arduino-builder"
+	dosym /usr/share/arduino-builder/platform.keys.rewrite.txt "${SHARE}/hardware"
+	dosym /usr/share/arduino-builder/platform.txt "${SHARE}/hardware"
+
+        # hardware/tools/avr needs to exist or arduino-builder will      
+        # complain about missing required -tools arg                     
+        dodir "${SHARE}/hardware/tools/avr" 
 
 	cd "${S}"/build/linux/work || die
 	rm -v lib/{apple*,batik*,bcpg*,bcprov*,commons-[^e]*,jackson*,jmdns*,jna*,jsch*,jssc*,slf4j*,xml*}

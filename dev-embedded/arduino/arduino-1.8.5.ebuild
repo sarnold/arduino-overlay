@@ -73,16 +73,8 @@ src_prepare() {
 	# Elegant, but breaks the build :(
 	#rm -f {arduino-core,app}/lib/{apple*,batik*,bcpg*,bcprov*,commons-[^e]*,jackson-*,jmdns*,jna*,jsch*,jssc*,xmlgraphics*} || die
 
-#	epatch "${FILESDIR}/${P}-build.xml.patch"
-#	if ! use doc; then
-#	    epatch "${FILESDIR}/${P}-no-doc.patch"
-#	fi
-#	sed -e 's/<download-library[^>]*>//g' -i build/build.xml
-
 	default
 
-#	rm -rf {arduino-core,app}/src/processing/app/macosx
-#	rm -rf arduino-core/src/processing/app/linux/GTKLookAndFeelFixer.java
 }
 
 src_compile() {

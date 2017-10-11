@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=5
@@ -31,7 +31,7 @@ src_compile() {
 	golang-build_src_compile
 
 	set -- env GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)" \
-		go build -v -work -x ${EGO_BUILD_FLAGS} arduino.cc/arduino-builder 
+		go build -v -work -x ${EGO_BUILD_FLAGS} arduino.cc/arduino-builder
 	echo "$@"
 	"$@" || die
 }

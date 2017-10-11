@@ -1,3 +1,7 @@
+TODO:
+
+* Control the installation of the IDE via a java USE flag, instead of fragmenting into arduino-[core,ide]
+
 # arduino-overlay
 Arduino IDE overlay for gentoo linux
 

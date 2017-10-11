@@ -26,18 +26,18 @@ S="${WORKDIR}/${PN}-${P}"
 JAVA_SRC_DIR="mrbean/src/main/java"
 JAVA_GENTOO_CLASSPATH="asm-4,jackson-2,jackson-databind-2"
 
-src_prepare() {                                                                 
-        default                                                                 
-                                                                                
-        sed -e 's:@package@:com.fasterxml.jackson.module.mrbean:g' \
-                -e "s:@projectversion@:${PV}:g" \
-                -e 's:@projectgroupid@:com.fasterxml.jackson.core:g' \
-                -e 's:@projectartifactid@:MrBeanModule:g' \
-                "${JAVA_SRC_DIR}/com/fasterxml/jackson/module/mrbean/PackageVersion.java.in" \
-                > "${JAVA_SRC_DIR}/com/fasterxml/jackson/module/mrbean/PackageVersion.java"
-                                                                                
-        java-pkg-2_src_prepare                                                  
-} 
+src_prepare() {
+	default
+
+	sed -e 's:@package@:com.fasterxml.jackson.module.mrbean:g' \
+		-e "s:@projectversion@:${PV}:g" \
+		-e 's:@projectgroupid@:com.fasterxml.jackson.core:g' \
+		-e 's:@projectartifactid@:MrBeanModule:g' \
+		"${JAVA_SRC_DIR}/com/fasterxml/jackson/module/mrbean/PackageVersion.java.in" \
+		> "${JAVA_SRC_DIR}/com/fasterxml/jackson/module/mrbean/PackageVersion.java"
+
+	java-pkg-2_src_prepare
+}
 
 src_install() {
 	java-pkg-simple_src_install

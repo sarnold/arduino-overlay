@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="strip binchecks"
 
-PATCHES=( 
+PATCHES=(
 	"${FILESDIR}/${P}"-startup.patch
 	"${FILESDIR}/${P}"-platform.patch
 )
@@ -53,9 +53,8 @@ dev-embedded/listserialportsc"
 RDEPEND="${COMMONDEP}
 >=virtual/jre-1.8
 dev-embedded/arduino-builder
-dev-embedded/avrdude        
-dev-embedded/uisp"          
-
+dev-embedded/avrdude
+dev-embedded/uisp"
 
 DEPEND="${COMMONDEP}
 >=virtual/jdk-1.8"
@@ -94,18 +93,18 @@ src_install() {
 	insinto "${SHARE}"
 	doins -r hardware
 
-        # Use system arduino-builder               
-        dosym /usr/bin/arduino-builder "${SHARE}/arduino-builder"
+	# Use system arduino-builder
+	dosym /usr/bin/arduino-builder "${SHARE}/arduino-builder"
 	dosym /usr/share/arduino-builder/platform.keys.rewrite.txt "${SHARE}/hardware/platform.keys.rewrite.txt"
 	dosym /usr/share/arduino-builder/platform.txt "${SHARE}/hardware/platform.txt"
 
-        # hardware/tools/avr needs to exist or arduino-builder will      
-        # complain about missing required -tools arg                     
-        dodir "${SHARE}/hardware/tools/avr" 
+	# hardware/tools/avr needs to exist or arduino-builder will
+	# complain about missing required -tools arg
+	dodir "${SHARE}/hardware/tools/avr"
 
 	cd "${S}"/build/linux/work || die
 	rm -v lib/{apple*,batik*,bcpg*,bcprov*,commons-[^e]*,jackson*,jmdns*,jna*,jsch*,jssc*,slf4j*,xml*}
-	rm -v lib/*.so 
+	rm -v lib/*.so
 	doins -r lib examples
 
 	java-pkg_dojar lib/*.jar

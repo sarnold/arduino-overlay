@@ -110,6 +110,20 @@ src_install() {
 		dohtml -r reference
 	fi
 
+	dodir "/usr/share/${PN}/hardware/tools/avr/bin/"
+	if [[ -e /usr/bin/avr-gcc ]] ; then
+		dosym /usr/bin/avr-g++ "/usr/share/${PN}/hardware/tools/avr/bin/avr-g++"
+		dosym /usr/bin/avr-gcc "/usr/share/${PN}/hardware/tools/avr/bin/avr-gcc"
+		dosym /usr/bin/avr-ar "/usr/share/${PN}/hardware/tools/avr/bin/avr-ar"
+		dosym /usr/bin/avr-objcopy "/usr/share/${PN}/hardware/tools/avr/bin/avr-objcopy"
+		dosym /usr/bin/avr-size "/usr/share/${PN}/hardware/tools/avr/bin/avr-size"
+	else
+		ewarn "missing /usr/bin/avr-gcc means no symlinks can be created"
+		ewarn "under /usr/share/${PN}/hardware/tools/avr/bin/ for you."
+		ewarn "Use crossdev to build an avr toolchain and then re-emerge"
+		ewarn "this package (or else make the symlinks manually)."
+	fi
+
 	# Install menu and icons
 	domenu "${FILESDIR}/${PN}.desktop"
 	for sz in `ls lib/icons | sed -e 's/\([0-9]*\)x[0-9]*/\1/'`; do

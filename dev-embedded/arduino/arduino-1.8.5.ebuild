@@ -28,8 +28,8 @@ PATCHES=(
 
 COMMONDEP="
 	dev-java/batik:1.8
-	dev-java/bcpg:1.52
-	dev-java/bcprov:1.52
+	dev-java/bcpg:1.58
+	dev-java/bcprov:1.58
 	dev-java/commons-codec:0
 	dev-java/commons-compress:0
 	dev-java/commons-httpclient:3

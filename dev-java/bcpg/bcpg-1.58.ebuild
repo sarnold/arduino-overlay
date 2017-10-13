@@ -14,7 +14,7 @@ HOMEPAGE="http://www.bouncycastle.org/java.html"
 SRC_URI="http://www.bouncycastle.org/download/${MY_P}.tar.gz"
 
 LICENSE="BSD"
-SLOT="1.52"
+SLOT="1.58"
 KEYWORDS="amd64 ppc64 x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux ~x64-macos"
 
 # Tests are currently broken. Appears to need older version of bcprov; but since bcprov is not slotted, this can cause conflicts.

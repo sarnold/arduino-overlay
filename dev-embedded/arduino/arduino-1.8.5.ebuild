@@ -59,7 +59,7 @@ RDEPEND="${COMMONDEP}
 DEPEND="${COMMONDEP}
 	>=virtual/jdk-1.8"
 
-EANT_GENTOO_CLASSPATH="batik-1.8,bcpg-1.52,bcprov-1.52,commons-codec,commons-compress,commons-httpclient-3,commons-lang-3.3,commons-logging,commons-net,jackson-2,jackson-annotations-2,jackson-databind-2,jackson-modules-base-2,jmdns,jna,jsch,jssc,xml-commons-external-1.3,xmlgraphics-commons-2"
+EANT_GENTOO_CLASSPATH="batik-1.8,bcpg-1.58,bcprov-1.58,commons-codec,commons-compress,commons-httpclient-3,commons-lang-3.3,commons-logging,commons-net,jackson-2,jackson-annotations-2,jackson-databind-2,jackson-modules-base-2,jmdns,jna,jsch,jssc,xml-commons-external-1.3,xmlgraphics-commons-2"
 EANT_EXTRA_ARGS="-Djava.net.preferIPv4Stack=true"
 EANT_BUILD_TARGET="build"
 JAVA_ANT_REWRITE_CLASSPATH="yes"

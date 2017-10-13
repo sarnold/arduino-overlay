@@ -5,7 +5,7 @@ EAPI=6
 JAVA_PKG_IUSE="doc gnome"
 IUSE='+java +arduino-core-avr'
 
-inherit eutils java-pkg-2 java-ant-2
+inherit eutils java-pkg-opt-2 java-ant-2
 
 DESCRIPTION="An open-source AVR electronics prototyping platform"
 HOMEPAGE="http://arduino.cc/"

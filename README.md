@@ -1,3 +1,5 @@
+Before asking for help, make sure you read https://bugs.gentoo.org/348991
+
 There is no longer a separation into arduino-[core,ide,blah]
 
 * To get the IDE, use the java flag (enabled by default)

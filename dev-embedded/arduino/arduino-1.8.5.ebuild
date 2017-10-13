@@ -3,6 +3,7 @@
 
 EAPI=6
 JAVA_PKG_IUSE="doc gnome"
+IUSE='+java +arduino-core-avr'
 
 inherit eutils java-pkg-2 java-ant-2
 
@@ -78,7 +79,9 @@ src_prepare() {
 }
 
 src_compile() {
-	eant -f build/build.xml -Dlight_bundle=1 -Dno_docs=1 -Dno_arduino_builder=1 -Dplatform=linux64
+	if use java; then
+		eant -f build/build.xml -Dlight_bundle=1 -Dno_docs=1 -Dno_arduino_builder=1 -Dplatform=linux64
+	fi
 }
 
 src_install() {
@@ -94,29 +97,32 @@ src_install() {
 	# complain about missing required -tools arg
 	dodir "${SHARE}/hardware/tools/avr"
 
-	cd "${S}"/build/linux/work || die
-	rm -v lib/{apple*,batik*,bcpg*,bcprov*,commons-[^e]*,jackson*,jmdns*,jna*,jsch*,jssc*,slf4j*,xml*}
-	rm -v lib/*.so
-	doins -r lib examples
+	#Install IDE
+	if use java; then
+		cd "${S}"/build/linux/work || die
+		rm -v lib/{apple*,batik*,bcpg*,bcprov*,commons-[^e]*,jackson*,jmdns*,jna*,jsch*,jssc*,slf4j*,xml*}
+		rm -v lib/*.so
+		doins -r lib examples
 
-	java-pkg_dojar lib/*.jar
-	java-pkg_dolauncher ${PN} \
+		java-pkg_dojar lib/*.jar
+		java-pkg_dolauncher ${PN} \
 			    --pwd "${CORE}" \
 			    --main "processing.app.Base" \
 			    --java_args "-DAPP_DIR=/usr/share/${PN} -DCORE_DIR=${CORE} -splash:/usr/share/${PN}/lib/splash.png"
 
-	if use doc; then
-		dodoc revisions.txt "${S}"/README.md
-		dohtml -r reference
-	fi
+		if use doc; then
+			dodoc revisions.txt "${S}"/README.md
+			dohtml -r reference
+		fi
 
-	# Install menu and icons
-	domenu "${FILESDIR}/${PN}.desktop"
-	for sz in `ls lib/icons | sed -e 's/\([0-9]*\)x[0-9]*/\1/'`; do
-		newicon -s $sz \
-			"lib/icons/${sz}x${sz}/apps/arduino.png" \
-			"${PN}.png"
-	done
+		# Install menu and icons
+		domenu "${FILESDIR}/${PN}.desktop"
+		for sz in `ls lib/icons | sed -e 's/\([0-9]*\)x[0-9]*/\1/'`; do
+			newicon -s $sz \
+				"lib/icons/${sz}x${sz}/apps/arduino.png" \
+				"${PN}.png"
+		done
+	fi
 }
 
 pkg_postinst() {

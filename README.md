@@ -1,6 +1,11 @@
+There is no longer a separation into arduino-[core,ide,blah]
+
+* To get the IDE, use the java flag (enabled by default)
+* To get the core, use the arduino-core-xxx flags (only arduino-core-avr available for now, enabled by default)
+
 TODO:
 
-* Control the installation of the IDE via a java USE flag, instead of fragmenting into arduino-[core,ide]
+* Add aditional cores, via flags, i.e. arduino-core-samd. Needs updated cross-arm-none-eabi-newlib with the nano flag. If anybody has gotten the gentoo newlib working with Arduino, let me know!
 
 # arduino-overlay
 Arduino IDE overlay for gentoo linux

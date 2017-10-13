@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-JAVA_PKG_IUSE="doc"
+JAVA_PKG_IUSE="doc gnome"
 
 inherit eutils java-pkg-2 java-ant-2
 
@@ -117,4 +117,16 @@ src_install() {
 			"lib/icons/${sz}x${sz}/apps/arduino.png" \
 			"${PN}.png"
 	done
+}
+
+pkg_postinst() {
+	if use gnome; then
+		gnome2_icon_cache_update
+	fi
+}
+
+pkg_postrm() {
+	if use gnome; then
+		gnome2_icon_cache_update
+	fi
 }

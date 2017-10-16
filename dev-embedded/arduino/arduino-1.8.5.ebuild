@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-JAVA_PKG_IUSE="doc gnome"
+JAVA_PKG_IUSE="doc"
 IUSE='+java +arduino-core-avr'
 
 inherit eutils java-pkg-opt-2 java-ant-2
@@ -29,8 +29,8 @@ PATCHES=(
 
 JDEPEND="
 	dev-java/batik:1.8
-	dev-java/bcpg:1.52
-	dev-java/bcprov:1.52
+	dev-java/bcpg:1.58
+	dev-java/bcprov:1.58
 	dev-java/commons-codec:0
 	dev-java/commons-compress:0
 	dev-java/commons-httpclient:3
@@ -62,7 +62,7 @@ DEPEND="
 	java? ( ${JDEPEND} 
 		>=virtual/jdk-1.8 )"
 
-EANT_GENTOO_CLASSPATH="batik-1.8,bcpg-1.52,bcprov-1.52,commons-codec,commons-compress,commons-httpclient-3,commons-lang-3.3,commons-logging,commons-net,jackson-2,jackson-annotations-2,jackson-databind-2,jackson-modules-base-2,jmdns,jna,jsch,jssc,xml-commons-external-1.3,xmlgraphics-commons-2"
+EANT_GENTOO_CLASSPATH="batik-1.8,bcpg-1.58,bcprov-1.58,commons-codec,commons-compress,commons-httpclient-3,commons-lang-3.3,commons-logging,commons-net,jackson-2,jackson-annotations-2,jackson-databind-2,jackson-modules-base-2,jmdns,jna,jsch,jssc,xml-commons-external-1.3,xmlgraphics-commons-2"
 EANT_EXTRA_ARGS="-Djava.net.preferIPv4Stack=true"
 EANT_BUILD_TARGET="build"
 JAVA_ANT_REWRITE_CLASSPATH="yes"
@@ -130,17 +130,5 @@ src_install() {
 				"lib/icons/${sz}x${sz}/apps/arduino.png" \
 				"${PN}.png"
 		done
-	fi
-}
-
-pkg_postinst() {
-	if use gnome; then
-		gnome2_icon_cache_update
-	fi
-}
-
-pkg_postrm() {
-	if use gnome; then
-		gnome2_icon_cache_update
 	fi
 }

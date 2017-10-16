@@ -12,7 +12,7 @@ HOMEPAGE="https://github.com/arduino/arduino-builder"
 SRC_URI="https://github.com/arduino/${PN}/archive/${PV}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~arm ~x86"
 
 RDEPEND="sys-devel/crossdev
 	>=dev-util/ctags-5.8_p20160314"

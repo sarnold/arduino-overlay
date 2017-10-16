@@ -7,7 +7,7 @@ inherit golang-build golang-vcs-snapshot
 EGO_PN="github.com/jstemmer/go-junit-report/..."
 EGIT_COMMIT="dd4990585ef80cedeb52eaadb2ce8dd71f9bdc37"
 ARCHIVE_URI="https://${EGO_PN%/*}/archive/${EGIT_COMMIT}.tar.gz -> ${P}.tar.gz"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~arm ~x86"
 
 DESCRIPTION="Converts go test output to an xml report"
 HOMEPAGE="https://${EGO_PN%/*}"

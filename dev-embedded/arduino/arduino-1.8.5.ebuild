@@ -13,7 +13,7 @@ SRC_URI="https://github.com/arduino/Arduino/archive/${PV}.tar.gz"
 
 LICENSE="GPL-2 LGPL-2.1 CC-BY-SA-3.0"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~arm ~x86"
 RESTRICT="strip binchecks"
 
 PATCHES=(
@@ -82,7 +82,13 @@ src_prepare() {
 
 src_compile() {
 	if use java; then
-		eant -f build/build.xml -Dlight_bundle=1 -Dno_docs=1 -Dno_arduino_builder=1 -Dplatform=linux64
+		EANT_EXTRA_ARGS+=" -Dlight_bundle=1 -Dno_arduino_builder=1"
+		use arm && EANT_EXTRA_ARGS+=" -Dplatform=linux32"
+		use x86 && EANT_EXTRA_ARGS+=" -Dplatform=linux32"
+		use amd64 && EANT_EXTRA_ARGS+=" -Dplatform=linux64"
+		use doc || EANT_EXTRA_ARGS+=" -Dno_docs=1"
+		echo "eant -f build/build.xml "${EANT_EXTRA_ARGS}""
+		eant -f build/build.xml "${EANT_EXTRA_ARGS}"
 	fi
 }
 

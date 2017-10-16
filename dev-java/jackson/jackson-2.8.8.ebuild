@@ -12,7 +12,7 @@ HOMEPAGE="https://github.com/FasterXML/jackson-core"
 SRC_URI="https://github.com/FasterXML/${PN}-core/archive/${PN}-core-${PV}.tar.gz"
 LICENSE="Apache-2.0"
 SLOT="2"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~arm ~x86"
 IUSE="test"
 
 RDEPEND=">=virtual/jre-1.7"

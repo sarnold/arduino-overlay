@@ -7,7 +7,7 @@ inherit golang-build golang-vcs-snapshot
 EGO_PN="github.com/stretchr/testify/..."
 EGIT_COMMIT="4d4bfba8f1d1027c4fdbe371823030df51419987"
 ARCHIVE_URI="https://${EGO_PN%/*}/archive/${EGIT_COMMIT}.tar.gz -> ${P}.tar.gz"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~arm ~x86"
 
 DESCRIPTION="go require package"
 HOMEPAGE="https://${EGO_PN%/*}"

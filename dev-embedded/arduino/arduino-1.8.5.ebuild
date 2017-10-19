@@ -125,6 +125,7 @@ src_install() {
 
 		# Install menu and icons
 		domenu "${FILESDIR}/${PN}.desktop"
+		local sz
 		for sz in `ls lib/icons | sed -e 's/\([0-9]*\)x[0-9]*/\1/'`; do
 			newicon -s $sz \
 				"lib/icons/${sz}x${sz}/apps/arduino.png" \

@@ -2,7 +2,7 @@
 <!DOCTYPE repositories SYSTEM "/dtd/repositories.dtd">
 <repositories xmlns="" version="1.0">
   <repo quality="experimental" status="unofficial">
-    <name><![CDATA[arduino-overlay]]></name>
+    <name><![CDATA[arduino]]></name>
     <description lang="en"><![CDATA[Arduino IDE Gentoo Overlay]]></description>
     <homepage>https://github.com/sarnold/arduino-overlay</homepage>
     <owner type="person">

@@ -5,6 +5,8 @@ EAPI=6
 
 inherit eutils
 
+MY_PN=BOSSA
+
 if [[ ${PV} == "9999" ]] ; then
 	EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
 	inherit git-r3

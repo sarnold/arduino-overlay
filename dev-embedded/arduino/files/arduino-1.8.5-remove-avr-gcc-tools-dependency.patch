@@ -1,0 +1,120 @@
+--- a/hardware/package_index_bundled.json	2017-10-20 15:02:18.503555670 -0700
++++ b/hardware/package_index_bundled.json	2017-10-20 15:04:18.837233896 -0700
+@@ -52,16 +52,6 @@
+           "toolsDependencies": [
+             {
+               "packager": "arduino",
+-              "name": "avr-gcc",
+-              "version": "4.9.2-atmel3.5.4-arduino2"
+-            },
+-            {
+-              "packager": "arduino",
+-              "name": "avrdude",
+-              "version": "6.3.0-arduino9"
+-            },
+-            {
+-              "packager": "arduino",
+               "name": "arduinoOTA",
+               "version": "1.1.1"
+             }
+@@ -110,47 +100,6 @@
+             }
+           ]
+         },
+-        {
+-          "name": "avr-gcc",
+-          "version": "4.9.2-atmel3.5.4-arduino2",
+-          "systems": [
+-            {
+-              "size": "27764772",
+-              "checksum": "SHA-256:ee36009e19bd238d1f6351cbc9aa5db69714761f67dec4c1d69d5d5d7758720c",
+-              "host": "arm-linux-gnueabihf",
+-              "archiveFileName": "avr-gcc-4.9.2-atmel3.5.4-arduino2-armhf-pc-linux-gnu.tar.bz2",
+-              "url": "http://downloads.arduino.cc/tools/avr-gcc-4.9.2-atmel3.5.4-arduino2-armhf-pc-linux-gnu.tar.bz2"
+-            },
+-            {
+-              "size": "28574644",
+-              "checksum": "SHA-256:67b3ed3555eacf0b4fc6f62240773b9f0220171fe4de26bb8d711547fc884730",
+-              "host": "i386-apple-darwin11",
+-              "archiveFileName": "avr-gcc-4.9.2-atmel3.5.4-arduino2-i386-apple-darwin11.tar.bz2",
+-              "url": "http://downloads.arduino.cc/tools/avr-gcc-4.9.2-atmel3.5.4-arduino2-i386-apple-darwin11.tar.bz2"
+-            },
+-            {
+-              "size": "44386446",
+-              "checksum": "SHA-256:6044551cd729d88ea6ffcccf10aad1934c5b164d61f4f5890b0e78524ffff853",
+-              "host": "i686-mingw32",
+-              "archiveFileName": "avr-gcc-4.9.2-atmel3.5.4-arduino2-i686-mingw32.zip",
+-              "url": "http://downloads.arduino.cc/tools/avr-gcc-4.9.2-atmel3.5.4-arduino2-i686-mingw32.zip"
+-            },
+-            {
+-              "size": "29723974",
+-              "checksum": "SHA-256:63a9d4cebbac06fd5fa8f48a2e2ba7d513837dcddc97f560129b4e466af901b5",
+-              "host": "i686-linux-gnu",
+-              "archiveFileName": "avr-gcc-4.9.2-atmel3.5.4-arduino2-i686-pc-linux-gnu.tar.bz2",
+-              "url": "http://downloads.arduino.cc/tools/avr-gcc-4.9.2-atmel3.5.4-arduino2-i686-pc-linux-gnu.tar.bz2"
+-            },
+-            {
+-              "size": "30374404",
+-              "checksum": "SHA-256:19480217f1524d78467b83cd742f503182bbcc76b5440093261f146828aa588c",
+-              "host": "x86_64-linux-gnu",
+-              "archiveFileName": "avr-gcc-4.9.2-atmel3.5.4-arduino2-x86_64-pc-linux-gnu.tar.bz2",
+-              "url": "http://downloads.arduino.cc/tools/avr-gcc-4.9.2-atmel3.5.4-arduino2-x86_64-pc-linux-gnu.tar.bz2"
+-            }
+-          ]
+-        },
+         {
+           "name": "arduinoOTA",
+           "version": "1.1.1",
+--- a/build/build.xml	2017-10-20 15:42:13.836783504 -0700
++++ b/build/build.xml	2017-10-20 15:53:42.874514933 -0700
+@@ -697,16 +697,6 @@
+     </antcall>
+ 
+     <antcall target="build-arduino-builder" />
+-
+-    <antcall target="avr-toolchain-bundle">
+-      <param name="unpack_target" value="untar"/>
+-      <param name="gcc_archive_file" value="avr-gcc-${AVRGCC-VERSION}-armhf-pc-linux-gnu.tar.bz2"/>
+-      <param name="gcc_version" value="${AVRGCC-VERSION}"/>
+-      <param name="avrdude_archive_file" value="avrdude-${AVRDUDE-VERSION}-armhf-pc-linux-gnu.tar.bz2"/>
+-      <param name="avrdude_version" value="${AVRDUDE-VERSION}"/>
+-      <param name="arduinoOTA_archive_file" value="arduinoOTA-${arduinoOTA-VERSION}-linux_arm.tar.bz2"/>
+-      <param name="arduinoOTA_version" value="${arduinoOTA-VERSION}"/>
+-    </antcall>
+   </target>
+ 
+   <target name="linux32-build" depends="linux-libastyle-x86" description="Build linux (32-bit) version">
+@@ -715,16 +705,6 @@
+     </antcall>
+ 
+     <antcall target="build-arduino-builder" />
+-
+-    <antcall target="avr-toolchain-bundle">
+-      <param name="unpack_target" value="untar"/>
+-      <param name="gcc_archive_file" value="avr-gcc-${AVRGCC-VERSION}-i686-pc-linux-gnu.tar.bz2"/>
+-      <param name="gcc_version" value="${AVRGCC-VERSION}"/>
+-      <param name="avrdude_archive_file" value="avrdude-${AVRDUDE-VERSION}-i686-pc-linux-gnu.tar.bz2"/>
+-      <param name="avrdude_version" value="${AVRDUDE-VERSION}"/>
+-      <param name="arduinoOTA_archive_file" value="arduinoOTA-${arduinoOTA-VERSION}-linux_386.tar.bz2"/>
+-      <param name="arduinoOTA_version" value="${arduinoOTA-VERSION}"/>
+-    </antcall>
+   </target>
+ 
+   <target name="linux64-build" depends="linux-libastyle-x86" description="Build linux (64-bit) version">
+@@ -733,16 +713,6 @@
+     </antcall>
+ 
+     <antcall target="build-arduino-builder" />
+-
+-    <antcall target="avr-toolchain-bundle">
+-      <param name="unpack_target" value="untar"/>
+-      <param name="gcc_archive_file" value="avr-gcc-${AVRGCC-VERSION}-x86_64-pc-linux-gnu.tar.bz2"/>
+-      <param name="gcc_version" value="${AVRGCC-VERSION}"/>
+-      <param name="avrdude_archive_file" value="avrdude-${AVRDUDE-VERSION}-x86_64-pc-linux-gnu.tar.bz2"/>
+-      <param name="avrdude_version" value="${AVRDUDE-VERSION}"/>
+-      <param name="arduinoOTA_archive_file" value="arduinoOTA-${arduinoOTA-VERSION}-linux_amd64.tar.bz2"/>
+-      <param name="arduinoOTA_version" value="${arduinoOTA-VERSION}"/>
+-    </antcall>
+   </target>
+ 
+   <target name="linux-jvm-noop"/>

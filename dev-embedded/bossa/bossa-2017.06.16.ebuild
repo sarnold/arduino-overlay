@@ -5,6 +5,8 @@ EAPI=6
 
 inherit eutils git-r3
 
+MY_PN=BOSSA
+
 EGIT_REPO_URI="https://github.com/shumatech/${PN}.git"
 EGIT_COMMIT=26154375695f345491bba158d57177aa231d6765
 

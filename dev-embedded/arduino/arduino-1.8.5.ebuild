@@ -3,7 +3,7 @@
 
 EAPI=6
 JAVA_PKG_IUSE="doc"
-IUSE='+java +arduino-core-avr'
+IUSE='+java +arduino-core-avr +arduino-core-samd'
 
 inherit eutils java-pkg-opt-2 java-ant-2
 
@@ -19,7 +19,10 @@ RESTRICT="strip binchecks"
 PATCHES=(
 	"${FILESDIR}/${P}"-startup.patch
 	"${FILESDIR}/${P}"-platform.patch
+	"${FILESDIR}"/${P}-remove-avr-gcc-tools-dependency.patch
 )
+
+#HTML_DOCS=(  )
 
 # Todo: Remaining bundled libs:
 #   commons-exec
@@ -52,14 +55,15 @@ JDEPEND="
 	dev-embedded/listserialportsc"
 
 RDEPEND="
-	java? ( ${JDEPEND} 
-		>=virtual/jre-1.8 
+	java? ( ${JDEPEND}
+		>=virtual/jre-1.8
 		dev-embedded/arduino-builder
 		dev-embedded/avrdude
-		dev-embedded/uisp )"
+		dev-embedded/uisp )
+	arduino-core-samd? ( dev-embedded/bossa )"
 
 DEPEND="
-	java? ( ${JDEPEND} 
+	java? ( ${JDEPEND}
 		>=virtual/jdk-1.8 )"
 
 EANT_GENTOO_CLASSPATH="batik-1.8,bcpg-1.58,bcprov-1.58,commons-codec,commons-compress,commons-httpclient-3,commons-lang-3.3,commons-logging,commons-net,jackson-2,jackson-annotations-2,jackson-databind-2,jackson-modules-base-2,jmdns,jna,jsch,jssc,xml-commons-external-1.3,xmlgraphics-commons-2"
@@ -120,7 +124,7 @@ src_install() {
 
 		if use doc; then
 			dodoc revisions.txt "${S}"/README.md
-			dohtml -r reference
+			dodoc -r reference
 		fi
 
 		# Install menu and icons

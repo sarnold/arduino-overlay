@@ -1,3 +1,9 @@
+Symlinking the local toolchain into /usr/share/${PN}/hardware/tools/avr/bin/ is retarded, because:
+
+	* The location of the toolchain is defined in platform* which gets patched and installed with arduino-builder
+	* If you are using arduino, you are using arduino-builder and you already have the correct location in platform*
+	* If you are not using arduino-builder, you are using some other way (Makefile) to get to the toolchain, and don't care about what's in platform*
+
 Before asking for help, make sure you read https://bugs.gentoo.org/348991
 
 There is no longer a separation into arduino-[core,ide,blah]

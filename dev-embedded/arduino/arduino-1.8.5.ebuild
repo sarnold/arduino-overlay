@@ -5,7 +5,7 @@ EAPI=6
 JAVA_PKG_IUSE="doc"
 IUSE='+java +arduino-core-avr +arduino-core-samd'
 
-inherit eutils java-pkg-opt-2 java-ant-2
+inherit eutils gnome2 java-pkg-opt-2 java-ant-2
 
 DESCRIPTION="An open-source AVR electronics prototyping platform"
 HOMEPAGE="http://arduino.cc/"
@@ -137,3 +137,30 @@ src_install() {
 		done
 	fi
 }
+
+pkg_postinst() {
+	gnome2_icon_cache_update
+
+	ewarn "To be able to use the Arduino IDE you need to aquire the avr toolchain,"
+	ewarn "i.e.: "
+	ewarn "   USE="-nls -openmp -sanitize -vtv" "
+	ewarn "     crossdev --g 5.4.0-r3 --b 2.28.1 -t avr -s4 --without-headers  "
+	ewarn " and set the kernel options: "
+	ewarn "   Device Drivers -> USB support -> USB Serial Converter support -> USB FTDI Single Port Serial Driver "
+	ewarn "   Device Drivers -> USB support -> USB Modem \(CDC ACM\) support "
+	ewarn " "
+	ewarn "Note with the latest crossdev you may need to specify an output overlay."
+	ewarn "You should also be in the uucp group."
+	ewarn " "
+	ewarn " Some resources:"
+	ewarn "   http://playground.arduino.cc/linux/gentoo "
+	ewarn "   https://bugs.gentoo.org/show_bug.cgi?id=147155 "
+	ewarn "   http://forums.gentoo.org/viewtopic-t-907860.html "
+	ewarn " "
+	elog
+}
+
+pkg_postrm() {
+	gnome2_icon_cache_update
+}
+

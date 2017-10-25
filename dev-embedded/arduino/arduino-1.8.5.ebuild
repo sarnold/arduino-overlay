@@ -5,7 +5,7 @@ EAPI=6
 JAVA_PKG_IUSE="doc"
 IUSE='+java +arduino-core-avr +arduino-core-samd'
 
-inherit eutils gnome2 java-pkg-opt-2 java-ant-2 user
+inherit eutils java-pkg-opt-2 java-ant-2 user
 
 DESCRIPTION="An open-source AVR electronics prototyping platform"
 HOMEPAGE="http://arduino.cc/"
@@ -159,7 +159,6 @@ src_install() {
 }
 
 pkg_postinst() {
-	gnome2_icon_cache_update
 
 	elog
 	elog "To be able to use the Arduino IDE you need to aquire the avr toolchain,"
@@ -187,8 +186,3 @@ pkg_postinst() {
 	elog "folder for a command line example with Makefile."
 	elog
 }
-
-pkg_postrm() {
-	gnome2_icon_cache_update
-}
-

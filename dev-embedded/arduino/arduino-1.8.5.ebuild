@@ -5,7 +5,7 @@ EAPI=6
 JAVA_PKG_IUSE="doc"
 IUSE='+java +arduino-core-avr +arduino-core-samd'
 
-inherit eutils gnome2 java-pkg-opt-2 java-ant-2
+inherit eutils gnome2 java-pkg-opt-2 java-ant-2 user
 
 DESCRIPTION="An open-source AVR electronics prototyping platform"
 HOMEPAGE="http://arduino.cc/"
@@ -14,6 +14,11 @@ SRC_URI="https://github.com/arduino/Arduino/archive/${PV}.tar.gz"
 LICENSE="GPL-2 LGPL-2.1 CC-BY-SA-3.0"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~x86"
+
+# note this does not work with current QA_* vars, not even with
+# QA_PREBUILT and exact file names/paths...
+# The offending files are all .elf firmware and prebuilt embedded static
+# libs (about 10 files in total) required for specific hardware.
 RESTRICT="strip binchecks"
 
 PATCHES=(
@@ -75,6 +80,13 @@ S="${WORKDIR}/Arduino-${PV}"
 CORE="/usr/share/arduino"
 SHARE="/usr/share/${PN}"
 
+pkg_setup() {
+	# group may not exist yet
+	enewgroup uucp
+
+	java-pkg-opt-2_pkg_setup
+}
+
 src_prepare() {
 	# Remove bundled libraries to ensure the system libraries are used
 	# Elegant, but breaks the build :(
@@ -124,8 +136,16 @@ src_install() {
 
 		if use doc; then
 			dodoc revisions.txt "${S}"/README.md
-			dodoc -r reference
+			insinto /usr/share/doc/"${P}"
+			doins -r reference
+			insinto /usr/share/doc/"${P}"/cli
+			doins -r "${FILESDIR}"/BlinkWithoutDelay
+			docompress -x /usr/share/doc/${PF}/cli /usr/share/doc/${PF}/reference
 		fi
+
+		# set permissions for group write, allows compiling Makefile example
+		fowners -R root:uucp /usr/share/arduino/hardware
+		fperms -R g+w /usr/share/arduino/hardware
 
 		# Install menu and icons
 		domenu "${FILESDIR}/${PN}.desktop"
@@ -141,22 +161,30 @@ src_install() {
 pkg_postinst() {
 	gnome2_icon_cache_update
 
-	ewarn "To be able to use the Arduino IDE you need to aquire the avr toolchain,"
-	ewarn "i.e.: "
-	ewarn "   USE="-nls -openmp -sanitize -vtv" "
-	ewarn "     crossdev --g 5.4.0-r3 --b 2.28.1 -t avr -s4 --without-headers  "
-	ewarn " and set the kernel options: "
-	ewarn "   Device Drivers -> USB support -> USB Serial Converter support -> USB FTDI Single Port Serial Driver "
-	ewarn "   Device Drivers -> USB support -> USB Modem \(CDC ACM\) support "
-	ewarn " "
-	ewarn "Note with the latest crossdev you may need to specify an output overlay."
-	ewarn "You should also be in the uucp group."
-	ewarn " "
-	ewarn " Some resources:"
-	ewarn "   http://playground.arduino.cc/linux/gentoo "
-	ewarn "   https://bugs.gentoo.org/show_bug.cgi?id=147155 "
-	ewarn "   http://forums.gentoo.org/viewtopic-t-907860.html "
-	ewarn " "
+	elog
+	elog "To be able to use the Arduino IDE you need to aquire the avr toolchain,"
+	elog "i.e., install crossdev-99999999 and run: "
+	elog " "
+	elog "   USE="-nls -openmp -pch -sanitize -vtv" "
+	elog "     crossdev -t avr -s4 --without-headers "
+	elog " "
+	elog " and set the kernel options: "
+	elog "   Device Drivers -> USB support -> USB Serial Converter support -> USB FTDI Single Port Serial Driver "
+	elog "   Device Drivers -> USB support -> USB Modem \(CDC ACM\) support "
+	elog " "
+	elog "Note with the latest crossdev you may need to specify an output overlay."
+	elog "You should also be in the uucp group; this ebuild provides uucp"
+	elog "group write access to $SHARE/hardware"
+	elog " "
+	elog "To remove this access, run 'sudo chown root:root -R $SHARE/hardware'"
+	elog " "
+	elog " Some resources:"
+	elog "   http://playground.arduino.cc/linux/gentoo "
+	elog "   https://bugs.gentoo.org/show_bug.cgi?id=525882 "
+	elog "   http://forums.gentoo.org/viewtopic-t-907860.html "
+	elog " "
+	elog "Copy the example BlinkWithoutDelay folder from the docs/cli"
+	elog "folder for a command line example with Makefile."
 	elog
 }
 

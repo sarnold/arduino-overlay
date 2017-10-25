@@ -35,13 +35,13 @@ layman.cfg:
 ```
 overlays  :
     https://api.gentoo.org/overlays/repositories.xml
-    https://raw.github.com/sarnold/arduino-overlay/master/layman.xml
+    https://raw.github.com/sarnold/arduino-overlay/master-local/layman.xml
 ```
 
 Run the following command as root:
 
 ```
- layman -f -a arduino -o https://raw.github.com/sarnold/arduino-overlay/master/layman.xml
+ layman -f -a arduino -o https://raw.github.com/sarnold/arduino-overlay/master-local/layman.xml
 ```
 
 and answer "y" at the prompt.  Then run "emerge arduino -vp" and check the

@@ -1,0 +1,11 @@
+<repositories encoding="unicode" version="1.1">
+  <repo priority="50" quality="experimental">
+    <name>arduino-overlay</name>
+    <description>Arduino IDE overlay for genott linux.</description>
+    <owner>
+      <email>mapmot@githun.com</email>
+      <name>mapmot</name>
+    </owner>
+    <source type="git">https://github.com/mapmot/arduino-overlay.git</source>
+  </repo>
+</repositories>

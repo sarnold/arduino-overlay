@@ -36,7 +36,7 @@ PATCHES=(
 #   rsyntaxtextarea-arduino
 
 JDEPEND="
-	dev-java/batik:1.8
+	dev-java/batik:1.9
 	dev-java/bcpg:1.58
 	dev-java/bcprov:1.58
 	dev-java/commons-codec:0
@@ -71,7 +71,7 @@ DEPEND="
 	java? ( ${JDEPEND}
 		>=virtual/jdk-1.8 )"
 
-EANT_GENTOO_CLASSPATH="batik-1.8,bcpg-1.58,bcprov-1.58,commons-codec,commons-compress,commons-httpclient-3,commons-lang-3.3,commons-logging,commons-net,jackson-2,jackson-annotations-2,jackson-databind-2,jackson-modules-base-2,jmdns,jna,jsch,jssc,xml-commons-external-1.3,xmlgraphics-commons-2"
+EANT_GENTOO_CLASSPATH="batik-1.9,bcpg-1.58,bcprov-1.58,commons-codec,commons-compress,commons-httpclient-3,commons-lang-3.3,commons-logging,commons-net,jackson-2,jackson-annotations-2,jackson-databind-2,jackson-modules-base-2,jmdns,jna,jsch,jssc,xml-commons-external-1.3,xmlgraphics-commons-2"
 EANT_EXTRA_ARGS="-Djava.net.preferIPv4Stack=true"
 EANT_BUILD_TARGET="build"
 JAVA_ANT_REWRITE_CLASSPATH="yes"

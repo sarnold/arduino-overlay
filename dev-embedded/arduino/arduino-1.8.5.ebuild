@@ -5,7 +5,7 @@ EAPI=6
 JAVA_PKG_IUSE="doc"
 IUSE='+java +arduino-core-avr +arduino-core-samd'
 
-inherit eutils gnome2 java-pkg-opt-2 java-ant-2 user
+inherit java-pkg-opt-2 java-ant-2 user
 
 DESCRIPTION="An open-source AVR electronics prototyping platform"
 HOMEPAGE="http://arduino.cc/"
@@ -36,7 +36,7 @@ PATCHES=(
 #   rsyntaxtextarea-arduino
 
 JDEPEND="
-	dev-java/batik:1.8
+	dev-java/batik:1.9
 	dev-java/bcpg:1.58
 	dev-java/bcprov:1.58
 	dev-java/commons-codec:0
@@ -71,7 +71,7 @@ DEPEND="
 	java? ( ${JDEPEND}
 		>=virtual/jdk-1.8 )"
 
-EANT_GENTOO_CLASSPATH="batik-1.8,bcpg-1.58,bcprov-1.58,commons-codec,commons-compress,commons-httpclient-3,commons-lang-3.3,commons-logging,commons-net,jackson-2,jackson-annotations-2,jackson-databind-2,jackson-modules-base-2,jmdns,jna,jsch,jssc,xml-commons-external-1.3,xmlgraphics-commons-2"
+EANT_GENTOO_CLASSPATH="batik-1.9,bcpg-1.58,bcprov-1.58,commons-codec,commons-compress,commons-httpclient-3,commons-lang-3.3,commons-logging,commons-net,jackson-2,jackson-annotations-2,jackson-databind-2,jackson-modules-base-2,jmdns,jna,jsch,jssc,xml-commons-external-1.3,xmlgraphics-commons-2"
 EANT_EXTRA_ARGS="-Djava.net.preferIPv4Stack=true"
 EANT_BUILD_TARGET="build"
 JAVA_ANT_REWRITE_CLASSPATH="yes"
@@ -159,7 +159,6 @@ src_install() {
 }
 
 pkg_postinst() {
-	gnome2_icon_cache_update
 
 	elog
 	elog "To be able to use the Arduino IDE you need to aquire the avr toolchain,"
@@ -187,8 +186,3 @@ pkg_postinst() {
 	elog "folder for a command line example with Makefile."
 	elog
 }
-
-pkg_postrm() {
-	gnome2_icon_cache_update
-}
-

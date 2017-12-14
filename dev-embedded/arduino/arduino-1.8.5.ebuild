@@ -3,13 +3,14 @@
 
 EAPI=6
 JAVA_PKG_IUSE="doc"
-IUSE='+java +arduino-core-avr +arduino-core-samd'
+IUSE='+java +arduino-core-avr +arduino-core-samd udooqdl'
 
 inherit java-pkg-opt-2 java-ant-2 user
 
 DESCRIPTION="An open-source AVR electronics prototyping platform"
 HOMEPAGE="http://arduino.cc/"
-SRC_URI="https://github.com/arduino/Arduino/archive/${PV}.tar.gz"
+SRC_URI="https://github.com/arduino/Arduino/archive/${PV}.tar.gz
+	udooqdl? ( https://github.com/UDOOboard/arduino-board-package/archive/boardmanager.tar.gz )"
 
 LICENSE="GPL-2 LGPL-2.1 CC-BY-SA-3.0"
 SLOT="0"
@@ -25,6 +26,8 @@ PATCHES=(
 	"${FILESDIR}/${P}"-startup.patch
 	"${FILESDIR}/${P}"-platform.patch
 	"${FILESDIR}"/${P}-remove-avr-gcc-tools-dependency.patch
+	"${FILESDIR}"/${PN}-fix-utoa-to-match-name.patch
+	"${FILESDIR}"/${PN}-sam-platform-toolchain.patch
 )
 
 #HTML_DOCS=(  )
@@ -79,6 +82,7 @@ JAVA_ANT_REWRITE_CLASSPATH="yes"
 S="${WORKDIR}/Arduino-${PV}"
 CORE="/usr/share/arduino"
 SHARE="/usr/share/${PN}"
+BOARDS="${WORKDIR}/arduino-board-package-boardmanager"
 
 pkg_setup() {
 	# group may not exist yet
@@ -92,8 +96,12 @@ src_prepare() {
 	# Elegant, but breaks the build :(
 	#rm -f {arduino-core,app}/lib/{apple*,batik*,bcpg*,bcprov*,commons-[^e]*,jackson-*,jmdns*,jna*,jsch*,jssc*,xmlgraphics*} || die
 
-	default
+	if use udooqdl ; then
+		mkdir -p "${S}"/hardware/UDOO
+		cp -R "${BOARDS}"/udoo/sam "${S}"/hardware/UDOO/ || die
+	fi
 
+	default
 }
 
 src_compile() {
@@ -159,7 +167,6 @@ src_install() {
 }
 
 pkg_postinst() {
-
 	elog
 	elog "To be able to use the Arduino IDE you need to aquire the avr toolchain,"
 	elog "i.e., install crossdev-99999999 and run: "

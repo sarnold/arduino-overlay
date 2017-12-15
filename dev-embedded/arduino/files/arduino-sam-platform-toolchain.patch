@@ -1,5 +1,5 @@
---- b/hardware/UDOO/sam/platform.txt	2016-11-10 06:56:20.000000000 -0800
-+++ a/hardware/UDOO/sam/platform.txt	2017-12-13 21:39:48.401300862 -0800
+--- a/hardware/UDOO/sam/platform.txt	2017-12-15 14:22:22.403848786 -0800
++++ b/hardware/UDOO/sam/platform.txt	2017-12-15 14:24:30.994386951 -0800
 @@ -17,7 +17,7 @@
  compiler.warning_flags.more=-Wall
  compiler.warning_flags.all=-Wall -Wextra
@@ -18,11 +18,13 @@
  compiler.size.cmd=arm-none-eabi-size
  compiler.define=-DARDUINO=
  compiler.combine.flags=-u _sbrk -u link -u _close -u _fstat -u _isatty -u _lseek -u _read -u _write -u _exit -u kill -u _getpid
-@@ -97,7 +97,7 @@
+@@ -96,8 +96,8 @@
+ # -------------------
  
  # BOSSA
- tools.bossac.path={runtime.tools.bossac-udoo.path}
+-tools.bossac.path={runtime.tools.bossac-udoo.path}
 -tools.bossac.cmd=bossac-udoo
++tools.bossac.path=/usr/bin
 +tools.bossac.cmd=bossac
  tools.bossac.cmd.windows=bossac-udoo.exe
  

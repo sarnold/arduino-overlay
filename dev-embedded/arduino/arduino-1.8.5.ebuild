@@ -3,7 +3,7 @@
 
 EAPI=6
 JAVA_PKG_IUSE="doc"
-IUSE='+java +arduino-core-avr +arduino-core-samd udooqdl'
+IUSE='+java +arduino-core-avr arduino-core-samd udooqdl'
 
 inherit java-pkg-opt-2 java-ant-2 user
 
@@ -68,7 +68,10 @@ RDEPEND="
 		dev-embedded/arduino-builder
 		dev-embedded/avrdude
 		dev-embedded/uisp )
-	arduino-core-samd? ( dev-embedded/bossa )"
+	|| (
+		arduino-core-samd? ( >=dev-embedded/bossa-1.8 )
+		udooqdl? ( ~dev-embedded/bossa-1.3 )
+	)"
 
 DEPEND="
 	java? ( ${JDEPEND}

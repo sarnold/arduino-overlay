@@ -75,7 +75,8 @@ RDEPEND="
 
 DEPEND="
 	java? ( ${JDEPEND}
-		>=virtual/jdk-1.8 )"
+		>=virtual/jdk-1.8 )
+	virtual/udev"
 
 EANT_GENTOO_CLASSPATH="batik-1.9,bcpg-1.58,bcprov-1.58,commons-codec,commons-compress,commons-httpclient-3,commons-lang-3.3,commons-logging,commons-net,jackson-2,jackson-annotations-2,jackson-databind-2,jackson-modules-base-2,jmdns,jna,jsch,jssc,xml-commons-external-1.3,xmlgraphics-commons-2"
 EANT_EXTRA_ARGS="-Djava.net.preferIPv4Stack=true"
@@ -167,6 +168,9 @@ src_install() {
 				"${PN}.png"
 		done
 	fi
+
+	# adjust rules for board-specific devices
+	use udooqdl && udev_dorules "${FILESDIR}"/80-udoo-${PN}.rules
 }
 
 pkg_postinst() {

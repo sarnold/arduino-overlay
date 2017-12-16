@@ -70,7 +70,7 @@ RDEPEND="
 		dev-embedded/uisp )
 	|| (
 		arduino-core-samd? ( >=dev-embedded/bossa-1.8 )
-		udooqdl? ( ~dev-embedded/bossa-1.3 )
+		udooqdl? ( dev-embedded/bossa[udooqdl=] )
 	)"
 
 DEPEND="

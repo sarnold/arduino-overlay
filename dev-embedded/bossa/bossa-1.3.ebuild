@@ -23,7 +23,7 @@ HOMEPAGE="https://github.com/UDOOboard/bossac"
 
 LICENSE="BSD 3-clause "New" or "Revised" License"
 SLOT="0"
-IUSE="udooqdl"
+IUSE="+udooqdl"
 
 RDEPEND="
 "

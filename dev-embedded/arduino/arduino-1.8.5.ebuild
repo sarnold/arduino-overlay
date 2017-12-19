@@ -22,14 +22,6 @@ KEYWORDS="~amd64 ~arm ~x86"
 # libs (about 10 files in total) required for specific hardware.
 RESTRICT="strip binchecks"
 
-PATCHES=(
-	"${FILESDIR}/${P}"-startup.patch
-	"${FILESDIR}/${P}"-platform.patch
-	"${FILESDIR}"/${P}-remove-avr-gcc-tools-dependency.patch
-	"${FILESDIR}"/${PN}-fix-utoa-to-match-name.patch
-	"${FILESDIR}"/${PN}-sam-platform-toolchain.patch
-)
-
 #HTML_DOCS=(  )
 
 # Todo: Remaining bundled libs:
@@ -78,6 +70,12 @@ DEPEND="
 		>=virtual/jdk-1.8 )
 	virtual/udev"
 
+PATCHES=(
+	"${FILESDIR}/${P}"-startup.patch
+	"${FILESDIR}/${P}"-platform.patch
+	"${FILESDIR}"/${P}-remove-avr-gcc-tools-dependency.patch
+)
+
 EANT_GENTOO_CLASSPATH="batik-1.9,bcpg-1.58,bcprov-1.58,commons-codec,commons-compress,commons-httpclient-3,commons-lang-3.3,commons-logging,commons-net,jackson-2,jackson-annotations-2,jackson-databind-2,jackson-modules-base-2,jmdns,jna,jsch,jssc,xml-commons-external-1.3,xmlgraphics-commons-2"
 EANT_EXTRA_ARGS="-Djava.net.preferIPv4Stack=true"
 EANT_BUILD_TARGET="build"
@@ -106,6 +104,9 @@ src_prepare() {
 	fi
 
 	default
+
+	use udooqdl && eapply "${FILESDIR}"/${PN}-fix-utoa-to-match-name.patch \
+		"${FILESDIR}"/${PN}-sam-platform-toolchain.patch
 }
 
 src_compile() {

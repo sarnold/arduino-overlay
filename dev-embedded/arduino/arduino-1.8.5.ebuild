@@ -5,7 +5,7 @@ EAPI=6
 JAVA_PKG_IUSE="doc"
 IUSE='+java +arduino-core-avr arduino-core-samd udooqdl'
 
-inherit java-pkg-opt-2 java-ant-2 user
+inherit java-pkg-opt-2 java-ant-2 udev user
 
 DESCRIPTION="An open-source AVR electronics prototyping platform"
 HOMEPAGE="http://arduino.cc/"

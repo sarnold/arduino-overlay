@@ -1,8 +1,10 @@
-Symlinking the local toolchain into /usr/share/${PN}/hardware/tools/avr/bin/ is retarded, because:
+Symlinking the local toolchain into /usr/share/${PN}/hardware/tools/avr/bin/
+is not necessary, because:
 
 	* The location of the toolchain is defined in platform* which gets patched and installed with arduino-builder
 	* If you are using arduino, you are using arduino-builder and you already have the correct location in platform*
 	* If you are not using arduino-builder, you are using some other way (Makefile) to get to the toolchain, and don't care about what's in platform*
+	* And the latest binutils and crossdev will set or reset the link as needed*
 
 Before asking for help, make sure you read https://bugs.gentoo.org/348991
 
@@ -35,13 +37,13 @@ layman.cfg:
 ```
 overlays  :
     https://api.gentoo.org/overlays/repositories.xml
-    https://raw.github.com/sarnold/arduino-overlay/master-local/layman.xml
+    https://raw.github.com/mapmot/arduino-overlay/master/repositories.xml
 ```
 
 Run the following command as root:
 
 ```
- layman -f -a arduino -o https://raw.github.com/sarnold/arduino-overlay/master-local/layman.xml
+ layman -f -a arduino-overlay -o https://raw.github.com/mapmot/arduino-overlay/master/repositories.xml
 ```
 
 and answer "y" at the prompt.  Then run "emerge arduino -vp" and check the
